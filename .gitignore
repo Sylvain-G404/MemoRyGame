@@ -1,0 +1,47 @@
+# ====================================================================
+# 📦 DÉPENDANCES ET COMPILATION (Les trucs lourds à NE PAS envoyer)
+# ====================================================================
+
+# Node.js : Bloque le dossier des packages téléchargés (très lourd)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Rust & Tauri : Bloque le dossier de compilation (contient les exécutables temporaires)
+src-tauri/target/
+
+# ====================================================================
+# ⚙️ CONFIGURATIONS LOCALES ET SECRÈTES (Spécifiques à ta machine)
+# ====================================================================
+
+# Fichiers d'environnement (clés API secrètes, mots de passe)
+.env
+.env.local
+.env.*.local
+
+# Fichiers système invisibles (Mac et Windows)
+.DS_Store
+Thumbs.db
+*.local
+
+# Outils d'édition (VS Code, etc.)
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# ====================================================================
+# 🛠️ TES RÈGLES SPÉCIFIQUES (Pour ton outil de génération)
+# ====================================================================
+
+# Ignore uniquement les scripts exécutés à la racine du générateur
+generate_structure_V2.bat
+generate_Depot_GitHub_Links_V2.bat
+
+# Ignorer le fichier temporaire dans le dossier Infos
+Infos_Structure

@@ -53,28 +53,27 @@ Retrouver les paires de cartes en faisant le moins de points possible.
 ## 📁 Structure du projet
 
 ```bash
-MemoRyGame/
-│
-├── index.html
-│
-├── Style/
-│   ├── style.css
-│   ├── main.css
-│   ├── table.css
-│   └── carte.css
-│
-├── JavaScript/
-│   ├── class.js        # Carte + Deck (logique métier)
-│   ├── main.js         # logique du jeu + interaction DOM
-│   └── songCarte.js    # gestion du son
-│
-├── Sounds/
-│   └── flipcard.mp3
-│
-├── ScreenCite/
-│   └── captures du jeu / interface
-│
-└── README.md
+C:.\MemoRyGame_V2
++--- index.html
++--- JavaScript
+|   +--- class.js
+|   +--- main.js
+|   +--- songCarte.js
+|   \--- Animation_Logo
+|       +--- logo_anime.js
+|       +--- logo_centre.js
+|       +--- logo_externe.js
+|       +--- logo_interne.js
+|       \--- main.js
++--- Sounds
+|   \--- flipcard.mp3
+\--- Style
+    +--- carte.css
+    +--- main.css
+    +--- style.css
+    +--- table.css
+    \--- Animation_Logo
+        \--- style.css
 ```
 
 ## 🧠 Architecture
@@ -145,11 +144,13 @@ Contient la gestion du son :
 
 ---
 
-## 👨‍💻 Auteur
+## 👤 À propos de l'Auteur
 
-KiirrA
+Ce projet a été développé avec passion par **KiirrA** (Sylvain-G404), développeur indépendant spécialisé dans la création d'outils d'automatisation légers, d'architectures logicielles découplées et d'interfaces web dynamiques.
 
-```
+N'hésitez pas à laisser une ⭐️ sur ce dépôt pour soutenir le projet !
 
-```
-"# MemoRyGame" 
+- **GitHub :** [@Sylvain-G404](https://github.com/Sylvain-G404)
+- **Portfolio :** [Mon-Portfolio-Temps](https://sylvain-g404.github.io/Mon-Portfolio-Temps/)
+
+_« Coder sans limites. »_
