@@ -55,7 +55,7 @@ Retrouver les paires de cartes en faisant le moins de points possible.
 ## 📁 Structure du projet
 
 ```bash
-C:.\MemoRyGame_V2
+C:.\MemoRyGame
 +--- index.html
 +--- JavaScript
 |   +--- class.js
@@ -125,6 +125,75 @@ Contient la gestion du son :
 - activation / désactivation via toggle
 - protection anti spam audio
 - contrôle de l’état sonore global
+
+---
+
+### 🕒 Animation temporelle du logo — Identité visuelle dynamique
+
+L'une des particularités de MemoRyGame est l'utilisation de mon propre logo animé comme motif sur le dos des cartes.
+
+Plutôt que d'utiliser une image statique, j'ai développé un système d'animation temporelle entièrement généré en JavaScript à l'aide de Canvas HTML5.
+
+### ⚙️ Architecture graphique
+
+L'animation repose sur un Canvas virtuel de 512 × 512 pixels, créé directement en mémoire du navigateur, sans être intégré au DOM.
+
+Le dessin est réparti en plusieurs modules indépendants :
+
+- **logo_externe.js** : construction du cadran extérieur et de ses 12 repères.
+- **logo_interne.js** : dessin du Double K central.
+- **logo_centre.js** : positionnement des lettres constituant le pseudo.
+- **logo_anime.js** : moteur temporel, rotations, effets dynamiques et synchronisation générale.
+- **main.js** : initialisation du Canvas et des variables nécessaires au fonctionnement du système.
+
+### ⏱️ Moteur temporel et rotations synchronisées
+
+L'animation dispose de sa propre horloge interne, indépendante de l'heure réelle.
+
+Son fonctionnement repose sur une progression temporelle volontairement découpée en crans successifs, plutôt que sur une rotation parfaitement fluide.
+
+Ce choix graphique rappelle le mécanisme d'une horloge traditionnelle : un mouvement rythmé, presque mécanique, qui donne au logo son propre caractère.
+
+Le cadran externe et le Double K central effectuent des rotations synchronisées, mais dans des directions opposées.
+
+Le cycle de rotation est basé sur une période de 48 secondes simulées, correspondant à une progression angulaire de 7,5° par seconde.
+
+### 🔥 Effets dynamiques
+
+Plusieurs effets viennent enrichir le rendu graphique :
+
+- **Effet thermique** : une coloration progressive fait évoluer le blanc vers des teintes orangées puis rouges, selon l'intensité thermique.
+- **Vibration dynamique** : un léger déplacement du cadran externe est proportionnel à l'intensité thermique.
+- **Ghost Scanner** : les branches du Double K agissent comme un scanner circulaire. Lorsqu'elles passent devant les positions des lettres, celles-ci deviennent lumineuses avant de retrouver leur faible opacité initiale.
+
+Ces effets sont calculés indépendamment du dessin géométrique, ce qui permet de conserver une architecture modulaire.
+
+### 🖼️ Transmission vers les cartes
+
+Le résultat graphique du Canvas est converti en image au format WebP grâce à `canvas.toDataURL()`.
+
+L'image générée est ensuite injectée dynamiquement dans une propriété CSS personnalisée globale :
+
+`--logo-anime-image`
+
+Cette variable est utilisée directement par les faces arrière des cartes via `background-image`.
+
+Ainsi, toutes les cartes partagent la même source graphique animée, sans avoir besoin de créer un Canvas individuel pour chacune d'elles.
+
+### 🎯 Objectifs et compétences techniques
+
+Cette réalisation m'a permis d'expérimenter plusieurs aspects de JavaScript et du développement graphique :
+
+- Manipulation avancée de Canvas 2D.
+- Transformations géométriques et rotations.
+- Gestion d'une horloge interne indépendante.
+- Calculs trigonométriques.
+- Gestion de boucles d'animation avec `requestAnimationFrame`.
+- Composition graphique et gestion des opacités.
+- Communication dynamique entre JavaScript et CSS.
+- Génération et diffusion d'images WebP en temps réel.
+
+**Le résultat :** une identité visuelle vivante, générée en temps réel, avec un mouvement volontairement cadencé qui rappelle le tic-tac d'une horloge et qui est directement intégré à l'expérience de jeu.
 
 ---
 
