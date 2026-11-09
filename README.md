@@ -4,6 +4,8 @@ Un jeu de mémoire en JavaScript où le joueur doit retrouver des paires de cart
 
 Le projet a évolué d’une version simple de cartes statiques vers une V2 avec logique de jeu complète, score, combo, animations et gestion du son.
 
+## ![MemoRyGame](<Screen_Site/Screenshot 2026-10-26 at 06-36-07 MemoRyGame.png>)
+
 ---
 
 ## 🎮 Objectif du jeu
