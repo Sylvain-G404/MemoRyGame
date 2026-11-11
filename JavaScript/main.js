@@ -11,8 +11,6 @@ const toggle = document.getElementById("soundToggle");
 
 // ==================== SON ====================
 
-// ==================== SON ====================
-
 // Premier clic n'importe où sur la page : débloque l'autorisation audio du navigateur
 // de manière totalement invisible, SANS forcer l'activation du son du jeu.
 document.body.addEventListener("click", () => {

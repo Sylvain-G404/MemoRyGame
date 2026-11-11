@@ -82,16 +82,4 @@ h1 {
 
 .retour-portfolio:hover {
     text-decoration: underline red;
-    background-color: white;
-    color: black;
-    border-radius: 50px / 40px;
-}
-
-/* ==================================================
-   5. RESPONSIVE MOBILE
-   ================================================== */
-@media (max-width: 600px) {
-    body {
-        overflow-y: auto; /* Autorise le scroll sur mobile si l'écran est minuscule */
-    }
 }

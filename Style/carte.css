@@ -1,7 +1,7 @@
 /* ===============  Style for the playing cards  =============== */
 .carte {
     aspect-ratio: 2 / 3;
-    
+
     /* Formule magique : la taille s'adaptte à la fois à la largeur et à la hauteur de l'écran */
     width: clamp(35px, 9vmin, 85px); 
     background: transparent;
@@ -109,33 +109,4 @@
 
 .matched {
     opacity: 0.3;
-}
-
-/* ==================================================
-   RESPONSIVE DESIGN MOBILE
-   ================================================== */
-@media (max-width: 600px) {
-    .carte {
-        /* Un poil plus petit sur mobile pour forcer les 13 lignes à loger */
-        width: clamp(30px, 11vmin, 60px) !important;
-    }
-
-    /* Pas de zoom au survol sur téléphone */
-    .carte:hover {
-        transform: none;
-    }
-
-    .carte.zoom {
-        transform: scale(2);
-        z-index: 100;
-    }
-
-    /* Carte retournée : gros zoom pour la mémorisation */
-    .carte.flip {
-        z-index: 10;
-    }
-
-    .carte.flip .carte-inner {
-        transform: rotateY(0deg);
-    }
 }

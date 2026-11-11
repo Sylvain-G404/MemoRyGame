@@ -1,0 +1,113 @@
+/* ==========================================================================
+   1. TOUS LES ÉCRANS EN MODE VERTICAL (PORTRAIT : SMARTPHONES & TABLETTES)
+   ========================================================================== */
+@media (max-width: 1025px) and (orientation: portrait) {
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        position: fixed;
+    }
+
+    .MemoRyGame {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        height: 100vh;
+        width: 100vw;
+        padding: 2vh 0;
+        box-sizing: border-box;
+    }
+
+    /* TA TABLE SABLIER : Parfaite pour le S10 et la tablette en vertical */
+    #table {
+        display: grid !important;
+        grid-template-columns: repeat(6, 1fr) !important;
+        width: 90vw; 
+        max-width: clamp(34vh, 45vw, 55vh) !important; 
+        gap: 6px; 
+        padding: 4px;
+        margin: auto;
+        box-sizing: border-box;
+    }
+
+    .carte {
+        width: 100% !important; 
+        aspect-ratio: 2 / 3 !important; 
+        font-size: clamp(10px, 2.5vmin, 15px);
+        justify-self: center;
+    }
+
+    .center {
+        font-size: 1.3em;
+    }
+
+    /* Application du design Sablier */
+    #table .carte { grid-column: auto !important; }
+    #table .carte:nth-child(25) { grid-column: 2 !important; }
+    #table .carte:nth-child(29) { grid-column: 1 !important; }
+
+    .carte:hover { transform: none; }
+}
+
+/* ==========================================================================
+   2. TOUS LES ÉCRANS EN MODE HORIZONTAL (LANDSCAPE : SMARTPHONES & TABLETTES)
+   ========================================================================== */
+@media (max-width: 1366px) and (orientation: landscape) {
+    html, body {
+        overflow: hidden !important;
+        position: fixed;
+        height: 100vh;
+        width: 100vw;
+    }
+
+    .MemoRyGame {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        height: 100vh;
+        width: 100vw;
+        padding: 1.5vh 0;
+        box-sizing: border-box;
+    }
+
+    /* GRILLE HORIZONTALE UNIQUE : 13 colonnes sur 4 lignes comme sur PC */
+    #table {
+        display: grid !important;
+        grid-template-columns: repeat(13, 1fr) !important; /* Force les 13 colonnes de l'espace PC */
+        width: 100% !important;
+        height: 65% !important;
+
+        /* Ajustement de la taille maximale pour que ça rentre au millimètre en hauteur */
+        max-width: 145vh !important; 
+        
+        gap: 1vh !important; 
+        padding: 5px !important;
+        margin: auto;
+        box-sizing: border-box;
+    }
+
+    /* ANNULATION COMPLÈTE DU SABLIER POUR LE PAYSAGE */
+    #table .carte, 
+    #table .carte:nth-child(25), 
+    #table .carte:nth-child(29) {
+        grid-column: auto !important; /* Casse le décalage du sablier */
+    }
+
+    #table .carte {
+        width: 100% !important;
+        aspect-ratio: 2 / 3 !important;
+        justify-self: center;
+        font-size: clamp(12px, 2.2vh, 14px) !important;
+    }
+
+    .center {
+        font-size: 1.2em !important;
+    }
+
+    .carte:hover { transform: none; }
+}

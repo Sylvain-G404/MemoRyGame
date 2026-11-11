@@ -11,28 +11,3 @@
     margin: 10px auto; 
     padding: 10px;
 }
-
-@media (max-width: 600px) {
-
-    #table {
-        grid-template-columns: repeat(6, 40px);
-        width: 100%;
-        padding: 15px;
-        gap: 6px;
-    }
-
-    /* 4 cartes au centre */
-    #table .carte:nth-child(25) {
-        grid-column: 2;
-    }
-
-    /* Recommence la grille normalement */
-    #table .carte:nth-child(29) {
-        grid-column: 1;
-    }
-
-    .carte {
-        width: clamp(35px, 35vw, 35px) !important;
-        justify-self: center;
-    }
-}

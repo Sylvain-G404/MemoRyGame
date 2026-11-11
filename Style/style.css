@@ -4,6 +4,8 @@
 @import url("table.css");
 /* -- Components -- */
 @import url("carte.css");
+/* -- Responsive -- */
+@import url("responsive.css");
 
 /* -- Animation -- */
 @import url("Animation_Logo/style.css");
