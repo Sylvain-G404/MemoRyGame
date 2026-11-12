@@ -1,4 +1,6 @@
 import { GameStateManager } from './stateManager.js';
+import { DISPLAY_CONFIG } from '../Engine/config.js';
+import { FullscreenEngine } from '../Engine/fullscreen.js';
 
 class MenuStateClass {
     constructor() {
@@ -7,12 +9,33 @@ class MenuStateClass {
 
     // Cette méthode est appelée automatiquement par le StateManager quand on arrive sur le menu
     enter() {
-        
         // 1. On récupère ou on crée un conteneur HTML pour notre menu
         this.menuContainer = document.getElementById('menu-container');
         if (this.menuContainer) {
             this.menuContainer.style.display = 'flex'; // On affiche le menu
             this.setupEventListeners();
+        }
+
+        const btnFullscreen = document.getElementById('btn-toggle-fullscreen');
+        if (btnFullscreen) {
+            if (!FullscreenEngine.estSupporte()) {
+                btnFullscreen.style.display = 'none';
+            } else {
+                // Met à jour le texte dès l'arrivée sur le menu
+                btnFullscreen.textContent = FullscreenEngine.estActif() 
+                    ? DISPLAY_CONFIG.labelPleinEcranOn 
+                    : DISPLAY_CONFIG.labelPleinEcranOff;
+
+                // Déclenche le plein écran au clic
+                btnFullscreen.onclick = () => FullscreenEngine.toggle();
+
+                // Synchronise le texte si le joueur quitte avec la touche Échap
+                FullscreenEngine.onChange((estActif) => {
+                    btnFullscreen.textContent = estActif 
+                        ? DISPLAY_CONFIG.labelPleinEcranOn 
+                        : DISPLAY_CONFIG.labelPleinEcranOff;
+                });
+            }
         }
     }
 

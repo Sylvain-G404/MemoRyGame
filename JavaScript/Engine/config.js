@@ -74,3 +74,9 @@ export const AUDIO_CONFIG = {
         // click: 'click.mp3'
     }
 };
+
+// 7. AFFICHAGE & PLEIN ÉCRAN
+export const DISPLAY_CONFIG = {
+    labelPleinEcranOn: 'PLEIN ÉCRAN : ACTIVÉ',
+    labelPleinEcranOff: 'PLEIN ÉCRAN : DÉSACTIVÉ'
+};
