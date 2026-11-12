@@ -45,7 +45,7 @@ export const GAME_RULES = {
 
 // 4. SÉCURITÉ & VALIDATION DES PSEUDOS
 export const SECURITY_CONFIG = {
-    cheminMotsInterdits: '../../Data/mots_interdits.json',
+    cheminMotsInterdits: './Data/mots_interdits.json',
     pseudoMinLength: 3,
     pseudoMaxLength: 16,
     pseudoParDefaut: 'Anonyme',
