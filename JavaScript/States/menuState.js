@@ -1,6 +1,6 @@
 import { GameStateManager } from './stateManager.js';
 import { DISPLAY_CONFIG } from '../Engine/config.js';
-import { FullscreenEngine } from '../Engine/fullscreen.js';
+import { FullscreenEngine } from '../Engine/displayEngine.js';
 
 class MenuStateClass {
     constructor() {
