@@ -1,227 +1,200 @@
-# 🧠 MemoRyGame
+# 🧠 MemoRyGame — V2
 
 Un jeu de mémoire en JavaScript où le joueur doit retrouver des paires de cartes en minimisant son score.
 
-Le projet a évolué d’une version simple de cartes statiques vers une V2 avec logique de jeu complète, score, combo, animations et gestion du son.
+Le projet a évolué d’un prototype de cartes statiques (V1) vers une **architecture modulaire complète (V2)** inspirée des standards de développement de jeux vidéo (**State Machine** & **Data-Driven Design**), intégrant deux modes de difficulté, un chronomètre, un moteur audio extensible et un classement en ligne sécurisé propulsé par **Supabase**.
 
-## ![MemoRyGame](<Screen_Site/Screenshot 2026-10-26 at 06-36-07 MemoRyGame.png>)
+## ![MemoRyGame](Screen_Site/5.1.Memory_In-Game_Normal.png)
 
 ---
 
 ## 🎮 Objectif du jeu
 
-Retrouver les paires de cartes en faisant le moins de points possible.
+Retrouver toutes les paires de cartes en terminant la partie avec le **score le plus bas possible** et le meilleur temps.
 
-- Chaque clic révèle une carte
-- Deux cartes sont comparées
-- Si elles correspondent → match
-- Sinon → elles se retournent
+- Le chronomètre démarre automatiquement au premier clic
+- Deux cartes sont révélées et comparées à chaque tour
+- Si elles correspondent → **match** (elles restent visibles)
+- Sinon → elles se retournent après un court délai de mémorisation
 
 ---
 
-## 🧩 Règles de jeu
+## 🧩 Règles de jeu & Difficultés
+
+### 🎚️ Modes de jeu
+
+- **Facile (26 cartes) :** Grille 2×13 utilisant uniquement les cartes rouges (Cœur & Carreau)
+- **Normal (52 cartes) :** Grille 4×13 utilisant un jeu complet de 52 cartes
 
 ### ✔ Match valide
 
-- Même valeur
-- Même famille (rouge / noir)
+- Même valeur (`2` à `As`)
+- Même couleur / famille (`Rouge` / `Noir`)
 
 ### ❌ Match invalide
 
-- +1 point
-- combo reset
+- `+1` point de pénalité
+- Remise à zéro du combo
 
 ---
 
 ## 🔥 Système de score
 
-- ❌ Erreur → +1 point
-- ✔ Match → combo augmente
-- 🔥 Combo ≥ 2 → -1 point par match consécutif
-- 💀 Combo reset → retour normal
+- ❌ **Erreur** → `+1` point
+- ✔ **Match** → le compteur de combo augmente
+- 🔥 **Combo ≥ 2** → `-1` point bonus par match consécutif
+- 💀 **Combo reset** → retour au calcul normal
 
-👉 Objectif : obtenir le score le plus bas possible
-
----
-
-## 🔊 Système son
-
-- Son de flip sur interaction
-- Activation uniquement après interaction utilisateur
-- Toggle ON/OFF disponible
+👉 **Objectif :** obtenir le score le plus bas possible (le score peut même devenir négatif grâce aux combos !).
 
 ---
 
-## 📁 Structure du projet
+## 🏆 Classement en ligne & Sécurité
 
-```bash
+Le jeu intègre un **Top 10 mondial** par mode de difficulté connecté à une base **PostgreSQL (Supabase)**, protégé par une sécurité double couche :
+
+- **Côté Client (`security.js`) :** Protection anti-XSS (filtrage des caractères spéciaux), normalisation _leetspeak_ (`0 → o`, `3 → e`, etc.) et modération via un dictionnaire JSON externe (`mots_interdits.json`) avec gestion des faux positifs.
+- **Côté Serveur (Supabase RLS & SQL) :**
+  - **Row Level Security (RLS)** activé : accès public (`anon`) limité strictement à la lecture (`SELECT`) et à l'ajout (`INSERT`) — aucune modification ni suppression possible.
+  - **Contraintes SQL (`CHECK`) :** Validation stricte côté base de données du format du pseudo (`^[a-zA-Z0-9_-]{3,16}$`), de la plage de score réaliste (`-26` à `999`) et du format du chronomètre (`MM:SS`).
+
+---
+
+## 🔊 Système audio
+
+- Moteur audio Singleton (`sounds.js`) piloté par la configuration centrale
+- Déblocage propre de l'`AudioContext` dès la première interaction utilisateur
+- Protection anti-spam (_debounce_) sur les clics rapides
+- Toggle **ON / OFF** accessible depuis le menu principal
+- Architecture prête à accueillir une banque complète d'effets sonores personnalisés
+
+---
+
+## 📁 Structure du projet (V2)
+
+```text
 C:.\MemoRyGame
 +--- index.html
++--- Assets
+|   \--- Sounds
+|       \--- flipcard.mp3
++--- Data
+|   \--- mots_interdits.json
 +--- JavaScript
-|   +--- class.js
 |   +--- main.js
-|   +--- songCarte.js
-|   \--- Animation_Logo
-|       +--- logo_anime.js
-|       +--- logo_centre.js
-|       +--- logo_externe.js
-|       +--- logo_interne.js
-|       \--- main.js
-+--- Sounds
-|   \--- flipcard.mp3
+|   +--- Engine
+
+|   |   +--- config.js
+|   |   +--- network.js
+|   |   +--- security.js
+|   |   \--- sounds.js
+|   +--- Entities
+
+|   |   +--- carte.js
+|   |   \--- deck.js
+|   +--- Logo
+
+|   |   +--- logo_centre.js
+|   |   +--- logo_externe.js
+|   |   +--- logo_interne.js
+|   |   \--- logoEngine.js
+|   \--- States
+|       +--- creditsState.js
+|       +--- gameState.js
+|       +--- menuState.js
+|       +--- optionsState.js
+|       +--- scoresState.js
+|       +--- stateManager.js
+|       \--- victoryState.js
 \--- Style
-    +--- carte.css
     +--- main.css
-    +--- style.css
-    +--- table.css
-    \--- Animation_Logo
-        \--- style.css
+    +--- Entities
+    |   \--- carte.css
+    +--- Logo
+    |   \--- style.css
+    \--- States
+        +--- credits.css
+        +--- game.css
+        +--- menu.css
+        +--- options.css
+        +--- responsive.css
+        +--- scores.css
+        \--- victory.css
 ```
 
-## 🧠 Architecture
+---
 
-### class.js
+## 🧠 Architecture logicielle (V2)
 
-Contient la logique métier du jeu :
+### ⚙️ `Engine/` — Cœur technique & Data-Driven Design
 
-- `Carte`
-  - valeur
-  - couleur
-  - famille (rouge / noir)
-  - méthodes de comparaison :
-    - `estMemeValeur()`
-    - `estMemeFamille()`
-    - `estMatch()`
-  - génération HTML de la carte
+- **`config.js`** : Source unique de vérité regroupant les réglages du joueur, les modes de difficulté, les règles de scoring, les timings (_Game Feel_), les paramètres de sécurité, les identifiants Supabase et le catalogue audio.
+- **`network.js`** : Gestion des requêtes `GET` et `POST` vers l'API REST de Supabase.
+- **`security.js`** : Validation, nettoyage et modération des pseudos avant envoi.
+- **`sounds.js`** : Gestionnaire audio centralisé avec anti-spam.
 
-- `Deck`
-  - création du paquet de cartes
-  - mélange des cartes (shuffle)
+### 🃏 `Entities/` — Objets métier
+
+- **`carte.js`** : Modèle d'une carte (valeur, couleur, famille), comparaison et rendu HTML 3D.
+- **`deck.js`** : Génération dynamique du paquet selon la difficulté configurée et mélange aléatoire (algorithme de Fisher-Yates).
+
+### 🧭 `States/` — Machine à états (State Machine)
+
+- **`stateManager.js`** : Orchestrateur central gérant le cycle de vie (`enter()`, `exit()`) et les transitions propres entre les écrans sans rechargement de page.
+- **`menuState.js`**, **`optionsState.js`**, **`gameState.js`**, **`victoryState.js`**, **`scoresState.js`**, **`creditsState.js`** : Chaque écran est isolé dans son propre module JavaScript et sa propre feuille de style dans `Style/States/`.
 
 ---
 
-### main.js
+## 🎨 Identité visuelle du logo — Génération graphique en mémoire
 
-Contient la logique principale du jeu :
+L'une des particularités de **MemoRyGame** est l'utilisation de mon propre logo comme motif sur le dos des cartes, généré dynamiquement en JavaScript à l'aide de **Canvas HTML5**.
 
-- affichage des cartes dans le DOM
-- gestion des clics utilisateur
-- sélection des deux cartes (première / deuxième)
-- gestion des états :
-  - flip
-  - matched
-  - bloque
-- comparaison des cartes
-- gestion du score et du combo
-- interaction globale avec le DOM
+### ⚙️ Architecture graphique (`JavaScript/Logo/`)
 
----
+Le rendu repose sur un **Canvas virtuel de 512 × 512 pixels**, créé directement en mémoire du navigateur sans être intégré au DOM. Le dessin est découpé en modules indépendants :
 
-### songCarte.js
+- **`logo_externe.js`** : construction du cadran extérieur et de ses 12 repères.
+- **`logo_interne.js`** : dessin du Double K central.
+- **`logo_centre.js`** : positionnement circulaire des lettres constituant le pseudo.
+- **`logoEngine.js`** : assemblage des calques, génération de l'image et injection CSS.
 
-Contient la gestion du son :
+### ⚡ Optimisation batterie & Transmission vers les cartes
 
-- lecture du son de flip
-- activation / désactivation via toggle
-- protection anti spam audio
-- contrôle de l’état sonore global
+Initialement conçu avec une boucle d'animation temporelle (`requestAnimationFrame`), le moteur a été optimisé en **V2** vers un **rendu statique généré à la volée** afin de préserver les performances et l'autonomie de la batterie sur mobile.
+
+Le résultat graphique du Canvas est converti en image au format WebP via `canvas.toDataURL()`, puis injecté dans une variable CSS globale (`--logo-anime-image`) partagée par toutes les faces arrière des cartes via `background-image`.
 
 ---
 
-### 🕒 Animation temporelle du logo — Identité visuelle dynamique
+## 🚀 Installation & Lancement en local
 
-L'une des particularités de MemoRyGame est l'utilisation de mon propre logo animé comme motif sur le dos des cartes.
+Ce projet utilise les **Modules ES6 natifs** (`import` / `export`) et l'API `fetch()`. Il doit être exécuté via un serveur web local :
 
-Plutôt que d'utiliser une image statique, j'ai développé un système d'animation temporelle entièrement généré en JavaScript à l'aide de Canvas HTML5.
-
-### ⚙️ Architecture graphique
-
-L'animation repose sur un Canvas virtuel de 512 × 512 pixels, créé directement en mémoire du navigateur, sans être intégré au DOM.
-
-Le dessin est réparti en plusieurs modules indépendants :
-
-- **logo_externe.js** : construction du cadran extérieur et de ses 12 repères.
-- **logo_interne.js** : dessin du Double K central.
-- **logo_centre.js** : positionnement des lettres constituant le pseudo.
-- **logo_anime.js** : moteur temporel, rotations, effets dynamiques et synchronisation générale.
-- **main.js** : initialisation du Canvas et des variables nécessaires au fonctionnement du système.
-
-### ⏱️ Moteur temporel et rotations synchronisées
-
-L'animation dispose de sa propre horloge interne, indépendante de l'heure réelle.
-
-Son fonctionnement repose sur une progression temporelle volontairement découpée en crans successifs, plutôt que sur une rotation parfaitement fluide.
-
-Ce choix graphique rappelle le mécanisme d'une horloge traditionnelle : un mouvement rythmé, presque mécanique, qui donne au logo son propre caractère.
-
-Le cadran externe et le Double K central effectuent des rotations synchronisées, mais dans des directions opposées.
-
-Le cycle de rotation est basé sur une période de 48 secondes simulées, correspondant à une progression angulaire de 7,5° par seconde.
-
-### 🔥 Effets dynamiques
-
-Plusieurs effets viennent enrichir le rendu graphique :
-
-- **Effet thermique** : une coloration progressive fait évoluer le blanc vers des teintes orangées puis rouges, selon l'intensité thermique.
-- **Vibration dynamique** : un léger déplacement du cadran externe est proportionnel à l'intensité thermique.
-- **Ghost Scanner** : les branches du Double K agissent comme un scanner circulaire. Lorsqu'elles passent devant les positions des lettres, celles-ci deviennent lumineuses avant de retrouver leur faible opacité initiale.
-
-Ces effets sont calculés indépendamment du dessin géométrique, ce qui permet de conserver une architecture modulaire.
-
-### 🖼️ Transmission vers les cartes
-
-Le résultat graphique du Canvas est converti en image au format WebP grâce à `canvas.toDataURL()`.
-
-L'image générée est ensuite injectée dynamiquement dans une propriété CSS personnalisée globale :
-
-`--logo-anime-image`
-
-Cette variable est utilisée directement par les faces arrière des cartes via `background-image`.
-
-Ainsi, toutes les cartes partagent la même source graphique animée, sans avoir besoin de créer un Canvas individuel pour chacune d'elles.
-
-### 🎯 Objectifs et compétences techniques
-
-Cette réalisation m'a permis d'expérimenter plusieurs aspects de JavaScript et du développement graphique :
-
-- Manipulation avancée de Canvas 2D.
-- Transformations géométriques et rotations.
-- Gestion d'une horloge interne indépendante.
-- Calculs trigonométriques.
-- Gestion de boucles d'animation avec `requestAnimationFrame`.
-- Composition graphique et gestion des opacités.
-- Communication dynamique entre JavaScript et CSS.
-- Génération et diffusion d'images WebP en temps réel.
-
-**Le résultat :** une identité visuelle vivante, générée en temps réel, avec un mouvement volontairement cadencé qui rappelle le tic-tac d'une horloge et qui est directement intégré à l'expérience de jeu.
+1. Cloner le dépôt :
+   ```bash
+   git clone https://github.com
+   ```
+2. Ouvrir le dossier dans **VS Code** et lancer **Live Server** (ou via Python : `python -m http.server 5500`).
+3. Ouvrir `http://localhost:5500` dans votre navigateur.
 
 ---
 
-## 🚀 Évolutions futures (V3 / V4)
+## 🔮 Évolutions futures (V3)
 
-- ajout d’un menu options (3 tirets)
-- personnalisation du jeu :
-  - couleur du fond
-  - dos des cartes
-  - taille des cartes
-- choix de difficulté :
-  - facile
-  - normal
-  - difficile
-- refactor du code :
-  - séparation game / ui / settings
-- amélioration des animations (flip + transitions)
-- ajout de modes de jeu
+- [ ] Ajout d'un mode **Hardcore (104 cartes)** utilisant un double paquet
+- [ ] Intégration d'effets sonores personnalisés complets (match, erreur, victoire, navigation)
+- [ ] Système d'identification légère par _Device Token_ pour protéger l'unicité d'un pseudo sur un même navigateur
+- [ ] Nouveaux thèmes visuels (couleur du tapis, dos de cartes personnalisables)
 
 ---
 
 ## 👤 À propos de l'Auteur
 
-Ce projet a été développé avec passion par **KiirrA** (Sylvain-G404), développeur indépendant spécialisé dans la création d'outils d'automatisation légers, d'architectures logicielles découplées et d'interfaces web dynamiques.
+Ce projet a été développé avec passion par **Ki->ir->rA**, développeur indépendant spécialisé dans la création d'outils d'automatisation légers, d'architectures logicielles découplées et d'interfaces web dynamiques.
 
 N'hésitez pas à laisser une ⭐️ sur ce dépôt pour soutenir le projet !
 
-- **GitHub :** [@Sylvain-G404](https://github.com/Sylvain-G404)
-- **Portfolio :** [Mon-Portfolio-Temps](https://sylvain-g404.github.io/Mon-Portfolio-Temps/)
+- **GitHub :** [@Ki->ir->rA](https://github.com)
+- **Portfolio :** [Mon-Portfolio-Temps](https://github.io)
 
 _« Coder sans limites. »_

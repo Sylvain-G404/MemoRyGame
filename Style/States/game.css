@@ -1,0 +1,71 @@
+/* ==================================================
+   ÉCRAN DE JEU (GAMEPLAY)
+   ================================================== */
+.MemoRyGame {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100vh;
+    width: 100vw;
+    padding: 10px 0;
+}
+
+/* Header horizontal sur une seule ligne */
+.game-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 95vw;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 5px 10px 15px 10px; /* Un peu d'air avant la ligne */
+    color: white;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2); /* Ligne blanche subtile */
+}
+
+.header-left h2 {
+    margin: 0;
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+    text-decoration: underline 2px red;
+}
+
+#HUD {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: clamp(1rem, 2.2vw, 1.4rem);
+    font-weight: bold;
+}
+
+#soundToggle {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 1.2rem;
+}
+
+#soundToggle.off {
+    opacity: 0.5;
+}
+
+/* Grille de cartes */
+#table {
+    display: grid;
+    grid-template-columns: repeat(13, 1fr); /* On garde la structure spatiale fixe ! */
+    gap: 1.2vh;
+    justify-content: center;
+    align-content: center;
+    
+    width: 98vw; /* Quasi 100 % de la largeur de l'écran */
+    height: calc(100vh - 80px); /* Toute la hauteur restante sous le header */
+    margin: 0 auto; 
+    padding: 10px;
+}

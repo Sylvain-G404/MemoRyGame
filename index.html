@@ -51,49 +51,148 @@
     />
 
     <!-- CSS -->
-    <link rel="stylesheet" href="Style/style.css" />
+    <link rel="stylesheet" href="Style/main.css" />
   </head>
 
   <body>
-    <div id="soundToggle" class="off">🔇</div>
-    <h1>MemoRyGame</h1>
-
-    <hr />
-    <div id="table"></div>
-    <div id="HUD">
-      <div id="score">Score : 0</div>
-      <div id="combo">Combo : x0</div>
-    </div>
-    <hr />
-    <div class="MemoRyGame" id="MemoRyGame">
-      <a href="https://sylvain-g404.github.io/Mon-Portfolio-Temps/" class="retour-portfolio" target="_blank" rel="noopener noreferrer">
-        ← Retour au Portfolio
-      </a>
+    <!-- ========================================== -->
+    <!-- 1. ÉCRAN MENU PRINCIPAL                    -->
+    <!-- ========================================== -->
+    <div id="menu-container" class="menu-screen">
+      <h1>MemoRyGame</h1>
+      <button id="btn-play" class="menu-btn">JOUER</button>
+      <button id="btn-options" class="menu-btn">OPTIONS</button>
+      <button id="btn-scores" class="menu-btn">CLASSEMENT</button>
+      <button id="btn-credits" class="menu-btn">CRÉDITS</button>
+      <button id="btn-portfolio" class="menu-btn">MON PORTFOLIO</button>
     </div>
 
-    <!-- ==================================================
-     1. BRIQUES DE DESSIN DU LOGO (Indépendantes)
-     ================================================== -->
-    <script src="JavaScript/Animation_Logo/logo_externe.js"></script>
-    <script src="JavaScript/Animation_Logo/logo_interne.js"></script>
-    <script src="JavaScript/Animation_Logo/logo_centre.js"></script>
+    <!-- ========================================== -->
+    <!-- 2. ÉCRAN DE JEU (GAMEPLAY CONTAINER)       -->
+    <!-- ========================================== -->
+    <div id="game-container" class="MemoRyGame" style="display: none">
+      <header class="game-header">
+        <div class="header-left">
+          <h2>MemoRyGame</h2>
+        </div>
 
-    <!-- ==================================================
-     2. MOTEUR DE L'ANIMATION ET CANVAS VIRTUEL
-     ================================================== -->
-    <!-- Initialise le canvas en mémoire -->
-    <script src="JavaScript/Animation_Logo/main.js"></script>
-    <!-- Gère la boucle temporelle et l'extraction toDataURL() -->
-    <script src="JavaScript/Animation_Logo/logo_anime.js"></script>
+        <div id="HUD">
+          Score : <span id="score-val">0</span> | <span id="timer-val">00:00</span> | <span id="combo-val">0</span> : Combo
+        </div>
 
-    <!-- ==================================================
-     3. LOGIQUE DU JEU DE CARTES MEMORY
-     ================================================== -->
-    <!-- Contient la classe Carte et Deck -->
-    <script src="JavaScript/class.js"></script>
+        <div class="header-right">
+          <div id="soundToggle" class="on">🔇</div>
+        </div>
+      </header>
 
-    <script src="JavaScript/songCarte.js"></script>
+      <main id="table">
+        <!-- Les cartes s'injecteront ici via le JS -->
+      </main>
+      <div id="rotate-screen">
+        <div class="rotate-content">
+          <div class="rotate-icon">📱🔄</div>
+          <h2>TOURNE TON ÉCRAN</h2>
+          <p>Ce jeu nécessite le mode paysage pour afficher le plateau de cartes.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 3. ÉCRAN OPTIONS                           -->
+    <!-- ========================================== -->
+    <div id="options-container" class="menu-screen">
+      <h1>OPTIONS</h1>
+      <button id="btn-toggle-diff" class="menu-btn">DIFFICULTÉ : NORMAL (52)</button>
+      <button id="btn-options-back" class="menu-btn">RETOUR AU MENU</button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 4. ÉCRAN DE VICTOIRE (FIN DE PARTIE)       -->
+    <!-- ========================================== -->
+    <div id="victory-container" class="menu-screen">
+      <h1>VICTOIRE !</h1>
+
+      <table class="victory-table">
+        <thead>
+          <tr>
+            <th>Difficulté</th>
+            <th>Score</th>
+            <th>Combo MAX</th>
+            <th>Temps</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td id="vic-diff">NORMAL</td>
+            <td id="vic-score">0</td>
+            <td id="vic-combo">0</td>
+            <td id="vic-temps">00:00</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="pseudo-box">
+        <input type="text" id="input-pseudo" placeholder="Ton pseudo..." maxlength="15" />
+        <button id="btn-submit-score" class="menu-btn">VALIDER</button>
+      </div>
+
+      <button id="btn-victory-menu" class="menu-btn">QUITTER SANS ENREGISTRER</button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 5. ÉCRAN CLASSEMENT MONDIAL (SCORES)       -->
+    <!-- ========================================== -->
+    <div id="scores-container" class="menu-screen">
+      <h1>CLASSEMENT</h1>
+
+      <!-- Bouton pour basculer entre le classement Normal et Facile -->
+      <button id="btn-scores-diff" class="menu-btn">MODE : NORMAL (52)</button>
+
+      <table class="victory-table">
+        <thead>
+          <tr>
+            <th>TOP</th>
+            <th>Pseudo</th>
+            <th>Score</th>
+            <th>Combo</th>
+            <th>Temps</th>
+          </tr>
+        </thead>
+        <tbody id="scores-tbody">
+          <!-- Les lignes s'injecteront ici depuis Supabase -->
+        </tbody>
+      </table>
+
+      <button id="btn-scores-back" class="menu-btn">RETOUR AU MENU</button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 6. ÉCRAN CRÉDITS                           -->
+    <!-- ========================================== -->
+    <div id="credits-container" class="menu-screen">
+      <h1>CRÉDITS</h1>
+
+      <div class="credits-box">
+        <div class="credit-group">
+          <p class="credit-role">--- LEAD CODE & ART ---</p>
+          <p class="credit-name">Ki-&gt;ir-&gt;rA</p>
+        </div>
+
+        <div class="credit-group">
+          <p class="credit-role">--- ORIGINAL SOUNDTRACK ---</p>
+          <p class="credit-name">Chris_art'Tattoo</p>
+        </div>
+
+        <div class="credit-group">
+          <p class="credit-role">--- SYNTHETIC ASSISTANCE ---</p>
+          <p class="credit-name">ChatGPT &amp; Gemini</p>
+        </div>
+      </div>
+
+      <button id="btn-credits-back" class="menu-btn">RETOUR AU MENU</button>
+    </div>
+
     <!-- Le chef d'orchestre : lance le jeu et l'animation au DOMContentLoaded -->
-    <script src="JavaScript/main.js"></script>
+    <script type="module" src="JavaScript/main.js"></script>
   </body>
 </html>

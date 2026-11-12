@@ -2,7 +2,7 @@
 // DESSIN DES LETTRES DU PSEUDO (CALÉES SUR LE K)
 // ==================================================
 
-function dessinerLettresPseudo(contexte, opacites = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]) {
+export function dessinerLettresPseudo(contexte, opacites = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]) {
 
     const centreX = 256;
     const centreY = 256;

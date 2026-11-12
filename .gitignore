@@ -46,3 +46,4 @@ generate_Depot_GitHub_Links_V2.bat
 # Ignorer le fichier temporaire dans le dossier Infos
 Infos_Structure
 *.zip
+*.txt

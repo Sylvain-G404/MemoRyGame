@@ -1,0 +1,46 @@
+#scores-container h1 {
+    color: white;
+    text-decoration: underline 2px red;
+}
+
+/* 1. On transforme la table en bloc défilable */
+.victory-table {
+    display: block;
+    max-height: 45vh; /* Ne dépassera jamais 45 % de la hauteur de l'écran */
+    overflow-y: auto; /* Active l'ascenseur vertical uniquement si les 10 lignes débordent */
+    width: 92%;
+    max-width: 600px;
+    border-collapse: collapse;
+    color: white;
+    text-align: center;
+    margin: 10px 0;
+}
+
+/* 2. Garde les colonnes bien alignées malgré le display: block */
+.victory-table thead,
+.victory-table tbody,
+.victory-table tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+/* 3. Fige l'en-tête (TOP, Pseudo, Score...) tout en haut pendant qu'on fait défiler les joueurs ! */
+.victory-table thead {
+    position: sticky;
+    top: 0;
+    background-color: midnightblue; /* Cache les lignes qui passent derrière */
+    z-index: 2;
+}
+
+/* 4. Un peu plus compact sur mobile pour faire tenir un maximum de lignes */
+.victory-table th, 
+.victory-table td {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: clamp(6px, 1.5vh, 12px) 4px;
+    font-size: clamp(0.8rem, 2.5vw, 1rem);
+    overflow: hidden;
+    text-overflow: ellipsis; /* Coupe proprement avec "..." si un pseudo est très long */
+    white-space: nowrap;
+}
+

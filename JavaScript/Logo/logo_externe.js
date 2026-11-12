@@ -1,4 +1,4 @@
-function dessinerLogoExterne(contexte) {
+export function dessinerLogoExterne(contexte) {
 
     // ==================================================
     // POSITIONNEMENT DU LOGO
@@ -191,7 +191,7 @@ function dessinerLogoExterne(contexte) {
     }
 }
 
-function testerGeometrieLogoExterne(contexte) {
+export function testerGeometrieLogoExterne(contexte) {
 
     // ==================================================
     // POSITIONNEMENT DU TEST

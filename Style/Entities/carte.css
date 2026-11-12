@@ -2,17 +2,20 @@
 .carte {
     aspect-ratio: 2 / 3;
 
-    /* Formule magique : la taille s'adaptte à la fois à la largeur et à la hauteur de l'écran */
-    width: clamp(35px, 9vmin, 85px); 
+    /* La hauteur pilote la taille maximale sur grand écran */
+    height: 18.5vh; 
+    /* La largeur se calcule toute seule pour garder le ratio 2/3 exact */
+    width: auto; 
+    /* Sécurité : si la fenêtre rétrécit en largeur, la carte rétrécit avec */
+    max-width: 100%; 
+
+    margin: 0 auto;
     background: transparent;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    
-    /* MODIFIÉ : Augmentation de la taille de police globale de la carte */
-    font-size: clamp(16px, 2.3vmin, 26px); 
-    
+    font-size: clamp(16px, 2.5vmin, 30px); 
     user-select: none;
     transition: transform 0.2s ease;
     perspective: 1000px;

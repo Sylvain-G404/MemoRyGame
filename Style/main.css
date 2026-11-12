@@ -1,85 +1,63 @@
-/* ==================================================
-   1. SÉLECTEUR UNIVERSEL & CONFIGURATION GLOBALE
-   ================================================== */
+/* 1. IMPORTS DES ÉTATS & ENTITÉS */
+@import url("States/menu.css");
+@import url("States/game.css");
+@import url("States/options.css");
+@import url("States/victory.css");
+@import url("States/scores.css");
+@import url("States/credits.css");
+@import url("States/responsive.css");
+@import url("Entities/carte.css");
+
+/* 2. CONFIGURATION GLOBALE */
 * {
-    box-sizing: border-box; /* Intègre paddings et bordures dans le calcul des tailles */
+    box-sizing: border-box;
 }
 
 html, body {
     margin: 0;
     padding: 0;
     height: 100%;
+    background-color: rgb(10, 10, 90);
+    overflow: hidden;
+    font-family: monospace;
 }
 
-body {
-    background-color: midnightblue;
-    overflow: hidden; /* Supprime le micro-scroll vertical sur PC */
-    height: 100vh;
-    font-family: monospace; /* Donne un look "Dev" cohérent avec le logo */
-}
-
-/* ==================================================
-   2. CONTENEUR PRINCIPAL DU JEU (LAYOUT)
-   ================================================== */
-.MemoRyGame {
+/* 3. COMPOSANTS PARTAGÉS (DRY) */
+.menu-screen {
     display: flex;
-    flex-direction: column; /* Aligne Titre -> Table -> HUD verticalement */
-    align-items: center;
-    justify-content: space-between;
-    height: 100vh;
-    padding: 10px 0;
-}
-
-/* ==================================================
-   3. ÉLÉMENTS DE L'INTERFACE (HUD & TYPOGRAPHIE)
-   ================================================== */
-h1 {
-    text-align: center;
-    color: white;
-    text-decoration: underline 2px red;
-    margin: 5px 0 0 0;
-}
-
-#HUD {
-    display: flex;
+    flex-direction: column;
     justify-content: center;
-    gap: 30px;
-    color: white;
-    font-size: 20px;
+    align-items: center;
+    gap: 20px;
+    height: 100vh;
+    width: 100vw;
 }
 
-/* ==================================================
-   4. COMPOSANTS SPÉCIFIQUES (BOUTONS & INTERACTION)
-   ================================================== */
-#soundToggle {
-    position: fixed;
-    top: 10px;
-    right: 20px;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: white;
-    border-radius: 8px;
+/* Masquage initial des écrans secondaires */
+#options-container,
+#victory-container,
+#scores-container,
+#credits-container {
+    display: none;
+}
+
+.menu-btn {
+    width: clamp(200px, 40vw, 350px);
+    padding: 12px 24px;
+    font-family: monospace;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: white;
+    background: transparent;
+    border: 2px solid white;
+    border-radius: 4px;
     cursor: pointer;
-    user-select: none;
-    z-index: 1000; /* Sécurité : passe toujours au-dessus du reste du jeu */
-}
-
-#soundToggle.off {
-    opacity: 0.5;
-}
-
-.retour-portfolio {
-    display: inline-block;
-    color: white;
-    text-decoration: none;
-    margin: 5px;
-    padding: 5px 10px;
     transition: all 0.2s ease-in-out;
 }
 
-.retour-portfolio:hover {
-    text-decoration: underline red;
+.menu-btn:hover {
+    background-color: white;
+    color: rgb(10, 10, 90);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+    transform: scale(1.05);
 }

@@ -1,0 +1,33 @@
+/* Masqué par défaut sur PC et en mode Paysage */
+#rotate-screen {
+    display: none;
+}
+
+/* S'affiche UNIQUEMENT si l'écran est plus haut que large (Portrait) et petit (Mobile/Tablette) */
+@media screen and (orientation: portrait) and (max-width: 900px) {
+    #rotate-screen {
+        display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: midnightblue;
+        color: white;
+        z-index: 9999; /* Passe par-dessus tout le jeu */
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .rotate-icon {
+        font-size: 4rem;
+        margin-bottom: 15px;
+    }
+
+    #rotate-screen h2 {
+        color: #ff3333;
+        margin-bottom: 10px;
+    }
+}

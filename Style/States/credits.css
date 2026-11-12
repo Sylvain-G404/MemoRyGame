@@ -1,0 +1,28 @@
+#credits-container h1 {
+    color: white;
+    text-decoration: underline 2px red;
+}
+
+.credits-box {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+    margin: 15px 0;
+}
+
+.credit-group p {
+    margin: 4px 0;
+}
+
+.credit-role {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+}
+
+.credit-name {
+    color: #ff3333;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
