@@ -6,8 +6,6 @@ Le projet a évolué d’un prototype de cartes statiques (V1) vers une **archit
 
 ## ![MemoRyGame](Screen_Site/5.1.Memory_In-Game_Normal.png)
 
----
-
 ## 🎮 Objectif du jeu
 
 Retrouver toutes les paires de cartes en terminant la partie avec le **score le plus bas possible** et le meilleur temps.
